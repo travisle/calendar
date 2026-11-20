@@ -38,6 +38,66 @@
       -webkit-tap-highlight-color: transparent;
     }
 
+    /* Chống lỗi dính màu nền (:hover / :focus) trên thiết bị cảm ứng Mobile */
+    .header-nav-control {
+      background-color: transparent;
+      outline: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .header-nav-control:focus {
+      outline: none;
+      background-color: transparent;
+    }
+
+    .header-nav-control:focus-visible {
+      outline: 2px solid #6366f1;
+      outline-offset: 1px;
+    }
+
+    .header-nav-control:active {
+      background-color: rgba(226, 232, 240, 0.75);
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .header-nav-control:hover {
+        background-color: rgba(226, 232, 240, 0.7);
+        color: #0f172a;
+      }
+    }
+
+    /* Nút Hôm nay: luôn giữ nguyên 1 màu sắc cố định, không dính hover trên mobile */
+    .btn-today-static {
+      background-color: #ffffff;
+      color: #1e293b;
+      border: 1px solid #cbd5e1;
+      outline: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .btn-today-static:focus {
+      outline: none;
+      background-color: #ffffff;
+      color: #1e293b;
+      border-color: #cbd5e1;
+    }
+
+    .btn-today-static:focus-visible {
+      outline: 2px solid #6366f1;
+      outline-offset: 1px;
+    }
+
+    .btn-today-static:active {
+      transform: scale(0.97);
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .btn-today-static:hover {
+        background-color: #f8fafc;
+        border-color: #94a3b8;
+      }
+    }
+
     /* Lưới 7 cột chống tràn ngang tuyệt đối trên màn hình hẹp 360px */
     .calendar-7-cols {
       display: grid;
@@ -89,7 +149,7 @@
         
         <!-- Nút Tháng Trước -->
         <button id="prevMonthBtn" type="button" title="Tháng trước" aria-label="Tháng trước"
-          class="h-9 w-8 sm:h-10 sm:w-10 inline-flex items-center justify-center rounded-lg text-slate-600 hover:bg-slate-200/70 hover:text-slate-900 active:bg-slate-200/80 active:scale-95 transition shrink-0 leading-none">
+          class="header-nav-control h-9 w-8 sm:h-10 sm:w-10 inline-flex items-center justify-center rounded-lg text-slate-600 active:scale-95 transition-transform shrink-0 leading-none">
           <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
           </svg>
@@ -98,7 +158,7 @@
         <!-- Cụm chọn Tháng / Năm giãn rộng linh hoạt chiếm tối đa khoảng trống ở giữa -->
         <div class="flex-1 flex items-center justify-center gap-0.5 sm:gap-1.5 min-w-0">
           <select id="monthSelect" aria-label="Chọn tháng"
-            class="compact-select h-9 sm:h-10 bg-transparent hover:bg-slate-200/60 text-[14px] sm:text-base font-extrabold tracking-tight text-slate-900 pl-1.5 sm:pl-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer transition leading-none">
+            class="header-nav-control compact-select h-9 sm:h-10 text-[14px] sm:text-base font-extrabold tracking-tight text-slate-900 pl-1.5 sm:pl-2.5 rounded-lg cursor-pointer transition-transform leading-none">
             <option value="1">Tháng 1</option>
             <option value="2">Tháng 2</option>
             <option value="3">Tháng 3</option>
@@ -116,22 +176,22 @@
           <span class="text-slate-300 font-light select-none text-xs sm:text-sm">/</span>
 
           <select id="yearSelect" aria-label="Chọn năm"
-            class="compact-select h-9 sm:h-10 bg-transparent hover:bg-slate-200/60 text-[14px] sm:text-base font-extrabold tracking-tight text-slate-900 pl-1 sm:pl-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer transition leading-none">
+            class="header-nav-control compact-select h-9 sm:h-10 text-[14px] sm:text-base font-extrabold tracking-tight text-slate-900 pl-1 sm:pl-2 rounded-lg cursor-pointer transition-transform leading-none">
             <!-- Sẽ được sinh tự động bằng JS -->
           </select>
         </div>
 
         <!-- Nút Tháng Sau -->
         <button id="nextMonthBtn" type="button" title="Tháng sau" aria-label="Tháng sau"
-          class="h-9 w-8 sm:h-10 sm:w-10 inline-flex items-center justify-center rounded-lg text-slate-600 hover:bg-slate-200/70 hover:text-slate-900 active:bg-slate-200/80 active:scale-95 transition shrink-0 leading-none">
+          class="header-nav-control h-9 w-8 sm:h-10 sm:w-10 inline-flex items-center justify-center rounded-lg text-slate-600 active:scale-95 transition-transform shrink-0 leading-none">
           <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
           </svg>
         </button>
 
-        <!-- Nút Hôm nay phẳng, đồng bộ chiều cao 36px (h-9) / 40px (sm:h-10), màu cố định nhẹ nhàng -->
+        <!-- Nút Hôm nay: dạng button rõ nét, cố định màu sắc hoàn toàn, đồng bộ chiều cao 36px / 40px -->
         <button id="todayBtn" type="button"
-          class="h-9 sm:h-10 px-2.5 sm:px-3.5 rounded-lg text-xs sm:text-sm font-semibold active:scale-95 transition whitespace-nowrap shrink-0 inline-flex items-center justify-center leading-none bg-indigo-50 text-indigo-700 hover:bg-indigo-100">
+          class="btn-today-static h-9 sm:h-10 px-2.5 sm:px-3.5 rounded-lg text-xs sm:text-sm font-semibold shadow-2xs transition-transform whitespace-nowrap shrink-0 inline-flex items-center justify-center leading-none">
           Hôm nay
         </button>
 
@@ -720,11 +780,13 @@
 
       monthSelect.addEventListener('change', (e) => {
         state.viewMonth = parseInt(e.target.value, 10);
+        e.target.blur();
         renderCalendar();
       });
 
       yearSelect.addEventListener('change', (e) => {
         state.viewYear = parseInt(e.target.value, 10);
+        e.target.blur();
         renderCalendar();
       });
 
