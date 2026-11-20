@@ -32,31 +32,21 @@
       -webkit-text-size-adjust: 100%;
     }
 
-    /* Tối ưu thao tác chạm trên điện thoại */
-    button, select {
-      touch-action: manipulation;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    /* Chống lỗi dính màu nền (:hover / :focus) trên thiết bị cảm ứng Mobile */
+    /* Chống lỗi dính màu nền (:hover / :focus) và khung viền đọng lại trên thiết bị cảm ứng Mobile */
     .header-nav-control {
       background-color: transparent;
-      outline: none;
+      outline: none !important;
+      box-shadow: none !important;
+      border: 0 solid transparent;
       -webkit-tap-highlight-color: transparent;
     }
 
-    .header-nav-control:focus {
-      outline: none;
-      background-color: transparent;
-    }
-
-    .header-nav-control:focus-visible {
-      outline: 2px solid #6366f1;
-      outline-offset: 1px;
-    }
-
+    .header-nav-control:focus,
+    .header-nav-control:focus-visible,
     .header-nav-control:active {
-      background-color: rgba(226, 232, 240, 0.75);
+      outline: none !important;
+      box-shadow: none !important;
+      background-color: transparent;
     }
 
     @media (hover: hover) and (pointer: fine) {
@@ -66,34 +56,44 @@
       }
     }
 
-    /* Nút Hôm nay: luôn giữ nguyên 1 màu sắc cố định, không dính hover trên mobile */
+    /* Nút Hôm nay: giữ cố định màu sắc, có hiệu ứng nhấn chạm rõ nét khi touch nhưng không đọng khung/màu sau khi thả */
     .btn-today-static {
       background-color: #ffffff;
       color: #1e293b;
       border: 1px solid #cbd5e1;
-      outline: none;
+      outline: none !important;
+      box-shadow: none !important;
       -webkit-tap-highlight-color: transparent;
+      transition: transform 110ms ease, background-color 110ms ease, border-color 110ms ease;
     }
 
-    .btn-today-static:focus {
-      outline: none;
+    .btn-today-static:focus,
+    .btn-today-static:focus-visible {
+      outline: none !important;
+      box-shadow: none !important;
       background-color: #ffffff;
       color: #1e293b;
       border-color: #cbd5e1;
     }
 
-    .btn-today-static:focus-visible {
-      outline: 2px solid #6366f1;
-      outline-offset: 1px;
-    }
-
     .btn-today-static:active {
-      transform: scale(0.97);
+      transform: scale(0.95);
+      background-color: #e2e8f0;
+      border-color: #94a3b8;
+      color: #0f172a;
+      outline: none !important;
+      box-shadow: none !important;
     }
 
     @media (hover: hover) and (pointer: fine) {
       .btn-today-static:hover {
         background-color: #f8fafc;
+        border-color: #94a3b8;
+      }
+
+      .btn-today-static:active {
+        transform: scale(0.95);
+        background-color: #e2e8f0;
         border-color: #94a3b8;
       }
     }
@@ -149,7 +149,7 @@
         
         <!-- Nút Tháng Trước -->
         <button id="prevMonthBtn" type="button" title="Tháng trước" aria-label="Tháng trước"
-          class="header-nav-control h-9 w-8 sm:h-10 sm:w-10 inline-flex items-center justify-center rounded-lg text-slate-600 active:scale-95 transition-transform shrink-0 leading-none">
+          class="header-nav-control h-9 w-8 sm:h-10 sm:w-10 inline-flex items-center justify-center rounded-lg text-slate-600 transition-transform shrink-0 leading-none">
           <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
           </svg>
@@ -183,15 +183,15 @@
 
         <!-- Nút Tháng Sau -->
         <button id="nextMonthBtn" type="button" title="Tháng sau" aria-label="Tháng sau"
-          class="header-nav-control h-9 w-8 sm:h-10 sm:w-10 inline-flex items-center justify-center rounded-lg text-slate-600 active:scale-95 transition-transform shrink-0 leading-none">
+          class="header-nav-control h-9 w-8 sm:h-10 sm:w-10 inline-flex items-center justify-center rounded-lg text-slate-600 transition-transform shrink-0 leading-none">
           <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
           </svg>
         </button>
 
-        <!-- Nút Hôm nay: dạng button rõ nét, cố định màu sắc hoàn toàn, đồng bộ chiều cao 36px / 40px -->
+        <!-- Nút Hôm nay: dạng button rõ nét, cố định màu sắc hoàn toàn, phản hồi chạm rõ rệt, đồng bộ chiều cao 36px / 40px -->
         <button id="todayBtn" type="button"
-          class="btn-today-static h-9 sm:h-10 px-2.5 sm:px-3.5 rounded-lg text-xs sm:text-sm font-semibold shadow-2xs transition-transform whitespace-nowrap shrink-0 inline-flex items-center justify-center leading-none">
+          class="btn-today-static h-9 sm:h-10 px-2.5 sm:px-3.5 rounded-lg text-xs sm:text-sm font-semibold whitespace-nowrap shrink-0 inline-flex items-center justify-center leading-none">
           Hôm nay
         </button>
 
@@ -774,21 +774,46 @@
       }
 
       // Gắn sự kiện điều khiển
-      prevMonthBtn.addEventListener('click', goPrevMonth);
-      nextMonthBtn.addEventListener('click', goNextMonth);
-      todayBtn.addEventListener('click', goToday);
+      function clearNavFocusFrames() {
+        [prevMonthBtn, nextMonthBtn, monthSelect, yearSelect, todayBtn].forEach((el) => {
+          if (el && typeof el.blur === 'function') {
+            el.blur();
+          }
+        });
+        if (document.activeElement && typeof document.activeElement.blur === 'function') {
+          document.activeElement.blur();
+        }
+      }
+
+      prevMonthBtn.addEventListener('click', () => {
+        goPrevMonth();
+        prevMonthBtn.blur();
+      });
+      nextMonthBtn.addEventListener('click', () => {
+        goNextMonth();
+        nextMonthBtn.blur();
+      });
+      todayBtn.addEventListener('click', () => {
+        goToday();
+        todayBtn.blur();
+      });
 
       monthSelect.addEventListener('change', (e) => {
         state.viewMonth = parseInt(e.target.value, 10);
-        e.target.blur();
         renderCalendar();
+        requestAnimationFrame(clearNavFocusFrames);
       });
 
       yearSelect.addEventListener('change', (e) => {
         state.viewYear = parseInt(e.target.value, 10);
-        e.target.blur();
         renderCalendar();
+        requestAnimationFrame(clearNavFocusFrames);
       });
+
+      // Xóa mọi khung focus đọng lại khi người dùng chạm hoặc cuộn trên di động
+      document.addEventListener('touchend', () => {
+        setTimeout(clearNavFocusFrames, 0);
+      }, { passive: true });
 
       // Hỗ trợ phím mũi tên trái/phải trên bàn phím
       document.addEventListener('keydown', (e) => {
