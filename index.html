@@ -56,45 +56,53 @@
       }
     }
 
-    /* Nút Hôm nay: giữ cố định màu sắc, có hiệu ứng nhấn chạm rõ nét khi touch nhưng không đọng khung/màu sau khi thả */
-    .btn-today-static {
-      background-color: #ffffff;
-      color: #1e293b;
-      border: 1px solid #cbd5e1;
+    /* Nút Hôm nay: nền màu xanh tím dịu rõ nét để nhận biết là nút bấm, đổi màu đậm hơn khi nhấn và trả về màu gốc ngay khi thả */
+    .btn-today-static,
+    .btn-today-static:link,
+    .btn-today-static:visited {
+      background-color: #e0e7ff;
+      color: #3730a3;
+      border: 1px solid #c7d2fe;
       outline: none !important;
       box-shadow: none !important;
       -webkit-tap-highlight-color: transparent;
-      transition: transform 110ms ease, background-color 110ms ease, border-color 110ms ease;
+      transform: scale(1);
+      transition: transform 110ms ease, background-color 110ms ease, border-color 110ms ease, color 110ms ease;
     }
 
     .btn-today-static:focus,
     .btn-today-static:focus-visible {
       outline: none !important;
       box-shadow: none !important;
-      background-color: #ffffff;
-      color: #1e293b;
-      border-color: #cbd5e1;
+      background-color: #e0e7ff;
+      color: #3730a3;
+      border-color: #c7d2fe;
+      transform: scale(1);
     }
 
-    .btn-today-static:active {
-      transform: scale(0.95);
-      background-color: #e2e8f0;
-      border-color: #94a3b8;
-      color: #0f172a;
+    .btn-today-static:active,
+    .btn-today-static.is-pressed {
+      transform: scale(0.96);
+      background-color: #a5b4fc;
+      border-color: #818cf8;
+      color: #1e1b4b;
       outline: none !important;
       box-shadow: none !important;
     }
 
     @media (hover: hover) and (pointer: fine) {
       .btn-today-static:hover {
-        background-color: #f8fafc;
-        border-color: #94a3b8;
+        background-color: #c7d2fe;
+        border-color: #a5b4fc;
+        color: #312e81;
       }
 
-      .btn-today-static:active {
-        transform: scale(0.95);
-        background-color: #e2e8f0;
-        border-color: #94a3b8;
+      .btn-today-static:active,
+      .btn-today-static.is-pressed {
+        transform: scale(0.96);
+        background-color: #a5b4fc;
+        border-color: #818cf8;
+        color: #1e1b4b;
       }
     }
 
@@ -793,9 +801,31 @@
         goNextMonth();
         nextMonthBtn.blur();
       });
+
+      // Đảm bảo nút Hôm nay luôn trở về màu gốc ngay khi nhả tay/chuột hoặc rời tiêu điểm
+      function releaseTodayPressState() {
+        todayBtn.classList.remove('is-pressed');
+        todayBtn.blur();
+      }
+
+      todayBtn.addEventListener('pointerdown', () => {
+        todayBtn.classList.add('is-pressed');
+      });
+      todayBtn.addEventListener('touchstart', () => {
+        todayBtn.classList.add('is-pressed');
+      }, { passive: true });
+      todayBtn.addEventListener('touchend', releaseTodayPressState, { passive: true });
+      todayBtn.addEventListener('touchcancel', releaseTodayPressState, { passive: true });
+      todayBtn.addEventListener('pointerup', releaseTodayPressState);
+      todayBtn.addEventListener('pointercancel', releaseTodayPressState);
+      todayBtn.addEventListener('mouseup', releaseTodayPressState);
+      todayBtn.addEventListener('mouseleave', () => {
+        todayBtn.classList.remove('is-pressed');
+      });
+
       todayBtn.addEventListener('click', () => {
         goToday();
-        todayBtn.blur();
+        releaseTodayPressState();
       });
 
       monthSelect.addEventListener('change', (e) => {
