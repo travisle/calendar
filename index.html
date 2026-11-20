@@ -83,55 +83,55 @@
   <!-- Container chính: giảm padding dọc để vừa trọn khung nhìn Mobile -->
   <main class="w-full max-w-4xl mx-auto px-2 sm:px-6 py-2 sm:py-6 flex-grow">
     
-    <!-- Header Tinh Gọn 1 Hàng Duy Nhất (Đồng bộ chiều cao 36px/40px tuyệt đối) -->
-    <header class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-1.5 sm:p-3 mb-2.5 sm:mb-4">
-      <div class="flex items-center justify-between gap-1 sm:gap-2.5">
+    <!-- Header Tinh Gọn 1 Hàng Phẳng, Không Khung Bao Thừa, Giãn Rộng Tối Đa -->
+    <header class="mb-2 sm:mb-4 px-0.5">
+      <div class="flex items-center justify-between gap-1 sm:gap-2 w-full">
         
-        <!-- Cụm điều hướng Tháng/Năm thống nhất: [ ‹ ] [ Tháng 11 ▾ / 2026 ▾ ] [ › ] -->
-        <div class="inline-flex items-center bg-slate-100/90 p-0.5 rounded-xl border border-slate-200/70 min-w-0">
-          <button id="prevMonthBtn" type="button" title="Tháng trước" aria-label="Tháng trước"
-            class="h-9 w-8 sm:h-10 sm:w-10 inline-flex items-center justify-center rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 active:bg-white active:scale-95 transition shrink-0 leading-none">
-            <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
+        <!-- Nút Tháng Trước -->
+        <button id="prevMonthBtn" type="button" title="Tháng trước" aria-label="Tháng trước"
+          class="h-9 w-8 sm:h-10 sm:w-10 inline-flex items-center justify-center rounded-lg text-slate-600 hover:bg-slate-200/70 hover:text-slate-900 active:bg-slate-200/80 active:scale-95 transition shrink-0 leading-none">
+          <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
 
-          <div class="inline-flex items-center min-w-0">
-            <select id="monthSelect" aria-label="Chọn tháng"
-              class="compact-select h-9 sm:h-10 bg-transparent hover:bg-white/70 text-[13px] sm:text-base font-extrabold tracking-tight text-slate-900 pl-1.5 sm:pl-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer transition leading-none">
-              <option value="1">Tháng 1</option>
-              <option value="2">Tháng 2</option>
-              <option value="3">Tháng 3</option>
-              <option value="4">Tháng 4</option>
-              <option value="5">Tháng 5</option>
-              <option value="6">Tháng 6</option>
-              <option value="7">Tháng 7</option>
-              <option value="8">Tháng 8</option>
-              <option value="9">Tháng 9</option>
-              <option value="10">Tháng 10</option>
-              <option value="11">Tháng 11</option>
-              <option value="12">Tháng 12</option>
-            </select>
+        <!-- Cụm chọn Tháng / Năm giãn rộng linh hoạt chiếm tối đa khoảng trống ở giữa -->
+        <div class="flex-1 flex items-center justify-center gap-0.5 sm:gap-1.5 min-w-0">
+          <select id="monthSelect" aria-label="Chọn tháng"
+            class="compact-select h-9 sm:h-10 bg-transparent hover:bg-slate-200/60 text-[14px] sm:text-base font-extrabold tracking-tight text-slate-900 pl-1.5 sm:pl-2.5 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer transition leading-none">
+            <option value="1">Tháng 1</option>
+            <option value="2">Tháng 2</option>
+            <option value="3">Tháng 3</option>
+            <option value="4">Tháng 4</option>
+            <option value="5">Tháng 5</option>
+            <option value="6">Tháng 6</option>
+            <option value="7">Tháng 7</option>
+            <option value="8">Tháng 8</option>
+            <option value="9">Tháng 9</option>
+            <option value="10">Tháng 10</option>
+            <option value="11">Tháng 11</option>
+            <option value="12">Tháng 12</option>
+          </select>
 
-            <span class="text-slate-300 font-light select-none text-xs sm:text-sm">/</span>
+          <span class="text-slate-300 font-light select-none text-xs sm:text-sm">/</span>
 
-            <select id="yearSelect" aria-label="Chọn năm"
-              class="compact-select h-9 sm:h-10 bg-transparent hover:bg-white/70 text-[13px] sm:text-base font-extrabold tracking-tight text-slate-900 pl-1 sm:pl-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer transition leading-none">
-              <!-- Sẽ được sinh tự động bằng JS -->
-            </select>
-          </div>
-
-          <button id="nextMonthBtn" type="button" title="Tháng sau" aria-label="Tháng sau"
-            class="h-9 w-8 sm:h-10 sm:w-10 inline-flex items-center justify-center rounded-lg text-slate-600 hover:bg-white hover:text-slate-900 active:bg-white active:scale-95 transition shrink-0 leading-none">
-            <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
+          <select id="yearSelect" aria-label="Chọn năm"
+            class="compact-select h-9 sm:h-10 bg-transparent hover:bg-slate-200/60 text-[14px] sm:text-base font-extrabold tracking-tight text-slate-900 pl-1 sm:pl-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer transition leading-none">
+            <!-- Sẽ được sinh tự động bằng JS -->
+          </select>
         </div>
 
-        <!-- Nút Hôm nay đồng bộ chiều cao 36px (h-9) / 40px (sm:h-10) bằng tuyệt đối các nút bên cạnh -->
+        <!-- Nút Tháng Sau -->
+        <button id="nextMonthBtn" type="button" title="Tháng sau" aria-label="Tháng sau"
+          class="h-9 w-8 sm:h-10 sm:w-10 inline-flex items-center justify-center rounded-lg text-slate-600 hover:bg-slate-200/70 hover:text-slate-900 active:bg-slate-200/80 active:scale-95 transition shrink-0 leading-none">
+          <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+
+        <!-- Nút Hôm nay phẳng, đồng bộ chiều cao 36px (h-9) / 40px (sm:h-10), màu cố định nhẹ nhàng -->
         <button id="todayBtn" type="button"
-          class="h-9 sm:h-10 px-2.5 sm:px-4 rounded-xl text-xs sm:text-sm font-semibold active:scale-95 transition whitespace-nowrap shrink-0 inline-flex items-center justify-center leading-none bg-indigo-50 text-indigo-700 border border-indigo-200/80 hover:bg-indigo-100">
+          class="h-9 sm:h-10 px-2.5 sm:px-3.5 rounded-lg text-xs sm:text-sm font-semibold active:scale-95 transition whitespace-nowrap shrink-0 inline-flex items-center justify-center leading-none bg-indigo-50 text-indigo-700 hover:bg-indigo-100">
           Hôm nay
         </button>
 
