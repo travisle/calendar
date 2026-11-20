@@ -146,10 +146,10 @@
     }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col justify-between selection:bg-indigo-100 selection:text-indigo-800 overflow-x-hidden">
+<body class="bg-slate-50 text-slate-800 antialiased min-h-[100dvh] selection:bg-indigo-100 selection:text-indigo-800 overflow-x-hidden">
 
   <!-- Container chính: giảm padding dọc để vừa trọn khung nhìn Mobile -->
-  <main class="w-full max-w-4xl mx-auto px-2 sm:px-6 py-2 sm:py-6 flex-grow">
+  <main class="w-full max-w-4xl mx-auto px-2 sm:px-6 pt-2 sm:pt-6 pb-1 sm:pb-2">
     
     <!-- Header Tinh Gọn 1 Hàng Phẳng, Không Khung Bao Thừa, Giãn Rộng Tối Đa -->
     <header class="mb-2 sm:mb-4 px-0.5">
@@ -263,20 +263,20 @@
       </div>
     </section>
 
-  </main>
+    <!-- Footer chú thích nhỏ đặt ngay sau panel chi tiết để không tạo khoảng trống lớn trên màn hình cao -->
+    <footer class="w-full pt-2 sm:pt-3 safe-area-pb text-center text-[11px] sm:text-xs text-slate-400">
+      <div class="flex flex-wrap items-center justify-center gap-x-3.5 gap-y-1">
+        <span class="inline-flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-indigo-600 inline-block"></span> Hôm nay
+        </span>
+        <span class="inline-flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-rose-500 inline-block"></span> Mùng 1 / Rằm Âm lịch
+        </span>
+        <span>Vuốt trái/phải đổi tháng</span>
+      </div>
+    </footer>
 
-  <!-- Footer chú thích nhỏ -->
-  <footer class="w-full max-w-4xl mx-auto px-3 pt-1 safe-area-pb text-center text-[11px] sm:text-xs text-slate-400">
-    <div class="flex flex-wrap items-center justify-center gap-x-3.5 gap-y-1">
-      <span class="inline-flex items-center gap-1.5">
-        <span class="w-2 h-2 rounded-full bg-indigo-600 inline-block"></span> Hôm nay
-      </span>
-      <span class="inline-flex items-center gap-1.5">
-        <span class="w-2 h-2 rounded-full bg-rose-500 inline-block"></span> Mùng 1 / Rằm Âm lịch
-      </span>
-      <span>Vuốt trái/phải đổi tháng</span>
-    </div>
-  </footer>
+  </main>
 
   <script>
     /**
